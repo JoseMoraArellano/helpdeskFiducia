@@ -1,5 +1,5 @@
 <!-- Modal -->
-<form id="frmNuevoReporte" method="POST" onsubmit="return agregarNuevoReporte()" enctype="multipart/form-data">
+<form id="frmNuevoReporte" method="POST" onsubmit="return agregarNuevoReporte()">
     <div class="modal fade" id="modalCrearReporte" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -40,18 +40,6 @@
                 </select>
                 <label for="problema">Describe tu problema</label>
                 <textarea name="problema" id="problema" class="form-control" required></textarea>
-                
-                <!-- Sección para adjuntar archivos -->
-                <div class="form-group mt-3">
-                    <label for="archivosAdjuntos">Archivos adjuntos (opcional)</label>
-                    <div class="custom-file">
-                        <input type="file" class="custom-file-input" id="archivosAdjuntos" name="archivosAdjuntos[]" multiple>
-                        <label class="custom-file-label" for="archivosAdjuntos">Seleccionar archivos</label>
-                    </div>
-                    <small class="form-text text-muted">Formatos permitidos: jpg, png, pdf, doc, docx, xls, xlsx (máx. 10MB)</small>
-                    
-                    <div id="archivosSeleccionados" class="mt-2"></div>
-                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>

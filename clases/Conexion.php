@@ -1,4 +1,6 @@
 <?php
+    if (!class_exists('Conexion')) {
+        
     class Conexion {
         public function conectar() {
             $servidor = "localhost";
@@ -9,3 +11,4 @@
             return $conexion;
         }
     }
+}
