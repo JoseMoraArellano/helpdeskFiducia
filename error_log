@@ -1,0 +1,33 @@
+[13-Feb-2025 01:09:29 UTC] PHP Warning:  require_once(../clases/Conexion.php): Failed to open stream: No such file or directory in /home/p392re6y8ukf/public_html/helpdesk.fianzasfiducia.com/restablecer.php on line 2
+[13-Feb-2025 01:09:29 UTC] PHP Fatal error:  Uncaught Error: Failed opening required '../clases/Conexion.php' (include_path='.:/opt/alt/php83/usr/share/pear:/opt/alt/php83/usr/share/php:/usr/share/pear:/usr/share/php') in /home/p392re6y8ukf/public_html/helpdesk.fianzasfiducia.com/restablecer.php:2
+Stack trace:
+#0 {main}
+  thrown in /home/p392re6y8ukf/public_html/helpdesk.fianzasfiducia.com/restablecer.php on line 2
+[13-Feb-2025 16:47:04 UTC] PHP Fatal error:  Uncaught Error: Call to undefined method Conexion::obtenerConexion() in /home/p392re6y8ukf/public_html/helpdesk.fianzasfiducia.com/recuperarContrasena.php:7
+Stack trace:
+#0 {main}
+  thrown in /home/p392re6y8ukf/public_html/helpdesk.fianzasfiducia.com/recuperarContrasena.php on line 7
+[13-Feb-2025 16:50:05 UTC] PHP Fatal error:  Uncaught Error: Call to undefined method Conexion::obtenerConexion() in /home/p392re6y8ukf/public_html/helpdesk.fianzasfiducia.com/recuperarContrasena.php:7
+Stack trace:
+#0 {main}
+  thrown in /home/p392re6y8ukf/public_html/helpdesk.fianzasfiducia.com/recuperarContrasena.php on line 7
+[13-Feb-2025 18:06:01 UTC] PHP Fatal error:  Uncaught Error: Class "Conexion" not found in /home/p392re6y8ukf/public_html/helpdesk.fianzasfiducia.com/recuperarContrasena.php:9
+Stack trace:
+#0 {main}
+  thrown in /home/p392re6y8ukf/public_html/helpdesk.fianzasfiducia.com/recuperarContrasena.php on line 9
+[13-Feb-2025 18:06:20 UTC] PHP Fatal error:  Uncaught Error: Class "Conexion" not found in /home/p392re6y8ukf/public_html/helpdesk.fianzasfiducia.com/recuperarContrasena.php:9
+Stack trace:
+#0 {main}
+  thrown in /home/p392re6y8ukf/public_html/helpdesk.fianzasfiducia.com/recuperarContrasena.php on line 9
+[13-Feb-2025 18:06:53 UTC] PHP Fatal error:  Uncaught Error: Class "Conexion" not found in /home/p392re6y8ukf/public_html/helpdesk.fianzasfiducia.com/recuperarContrasena.php:9
+Stack trace:
+#0 {main}
+  thrown in /home/p392re6y8ukf/public_html/helpdesk.fianzasfiducia.com/recuperarContrasena.php on line 9
+[13-Feb-2025 18:10:09 UTC] PHP Fatal error:  Uncaught Error: Class "Conexion" not found in /home/p392re6y8ukf/public_html/helpdesk.fianzasfiducia.com/recuperarContrasena.php:10
+Stack trace:
+#0 {main}
+  thrown in /home/p392re6y8ukf/public_html/helpdesk.fianzasfiducia.com/recuperarContrasena.php on line 10
+[13-Feb-2025 18:18:34 UTC] PHP Fatal error:  Uncaught Error: Class "Conexion" not found in /home/p392re6y8ukf/public_html/helpdesk.fianzasfiducia.com/recuperarContrasena.php:10
+Stack trace:
+#0 {main}
+  thrown in /home/p392re6y8ukf/public_html/helpdesk.fianzasfiducia.com/recuperarContrasena.php on line 10
