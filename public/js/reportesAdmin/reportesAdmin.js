@@ -63,3 +63,19 @@ function agregarSolucionReporte() {
 
     return false;
 }
+function verArchivosAdjuntos(idReporte) {
+    $('#modalVerArchivos').modal('show');
+    
+    $.ajax({
+        type: "POST",
+        data: "idReporte=" + idReporte,
+        url: "../procesos/obtenerArchivosReporte.php",
+        success: function(respuesta) {
+            $('#contenidoArchivosAdjuntos').html(respuesta);
+        },
+        error: function(xhr, status, error) {
+            console.error("Error AJAX:", error);
+            $('#contenidoArchivosAdjuntos').html('<p class="text-danger text-center">Error al cargar los archivos</p>');
+        }
+    });
+}

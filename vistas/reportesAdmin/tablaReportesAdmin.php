@@ -1,4 +1,3 @@
-
 <?php
     session_start();
     include "../../clases/Conexion.php";
@@ -43,6 +42,7 @@
         <th>Descripcion</th>
         <th>Estatus</th>
         <th>Solucion</th>
+        <th>Adjuntos</th>
         <th>Eliminar</th>
     </thead>
     <tbody>
@@ -73,6 +73,22 @@
             </td>
             <td>
                 <?php
+                // Verificar si tiene archivos adjuntos
+                $sqlArchivos = "SELECT COUNT(*) as total FROM t_archivos_reportes WHERE id_reporte = " . $mostrar['idReporte'];
+                $resultadoArchivos = mysqli_query($conexion, $sqlArchivos);
+                $totalArchivos = mysqli_fetch_assoc($resultadoArchivos)['total'];
+                
+                if ($totalArchivos > 0) {
+                    echo '<button class="btn btn-outline-info btn-sm" onclick="verArchivosAdjuntos(' . $mostrar['idReporte'] . ')" title="Ver archivos adjuntos">';
+                    echo '<i class="fas fa-paperclip"></i> ' . $totalArchivos;
+                    echo '</button>';
+                } else {
+                    echo '<span class="text-muted"><i class="fas fa-paperclip"></i> 0</span>';
+                }
+                ?>
+            </td>
+            <td>
+                <?php
                     if ($mostrar['solucion'] == "") {
                 ?>
                         <button class="btn btn-danger btn-sm" 
@@ -87,6 +103,29 @@
     <?php } ?>
     </tbody>
 </table>
+<!-- Modal para ver archivos adjuntos -->
+<div class="modal fade" id="modalVerArchivos" tabindex="-1" role="dialog" aria-labelledby="tituloModalArchivos" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="tituloModalArchivos">Archivos adjuntos</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="contenidoArchivosAdjuntos">
+                <div class="text-center">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="sr-only">Cargando...</span>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 <script>
     $(document).ready(function(){
@@ -127,4 +166,3 @@
         });
     })
 </script>
-
