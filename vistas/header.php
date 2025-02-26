@@ -68,7 +68,7 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="recursos.php">
-                        <span class="fas fa-boxes"></span> Recursos
+                        <span class="fas fa-laptop"></span> Recursos
                     </a>
                 </li>
                 <li class="nav-item">
