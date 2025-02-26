@@ -67,6 +67,11 @@
                     </a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link" href="recursos.php">
+                        <span class="fas fa-boxes"></span> Recursos
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" href="asignacion.php">
                     <span class="fas fa-address-book"></span> Asignacion
                     </a>
