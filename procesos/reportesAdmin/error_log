@@ -1,6 +1,0 @@
-[15-Feb-2025 22:53:47 UTC] PHP Warning:  Undefined array key "usuario" in /home/p392re6y8ukf/public_html/helpdesk.fianzasfiducia.com/procesos/reportesAdmin/actualizarSolucion.php on line 8
-[15-Feb-2025 22:53:47 UTC] PHP Warning:  Trying to access array offset on null in /home/p392re6y8ukf/public_html/helpdesk.fianzasfiducia.com/procesos/reportesAdmin/actualizarSolucion.php on line 8
-[17-Feb-2025 01:53:59 UTC] PHP Warning:  Undefined array key "usuario" in /home/p392re6y8ukf/public_html/helpdesk.fianzasfiducia.com/procesos/reportesAdmin/actualizarSolucion.php on line 8
-[17-Feb-2025 01:53:59 UTC] PHP Warning:  Trying to access array offset on null in /home/p392re6y8ukf/public_html/helpdesk.fianzasfiducia.com/procesos/reportesAdmin/actualizarSolucion.php on line 8
-[17-Feb-2025 01:57:56 UTC] PHP Warning:  Undefined array key "usuario" in /home/p392re6y8ukf/public_html/helpdesk.fianzasfiducia.com/procesos/reportesAdmin/actualizarSolucion.php on line 8
-[17-Feb-2025 01:57:56 UTC] PHP Warning:  Trying to access array offset on null in /home/p392re6y8ukf/public_html/helpdesk.fianzasfiducia.com/procesos/reportesAdmin/actualizarSolucion.php on line 8

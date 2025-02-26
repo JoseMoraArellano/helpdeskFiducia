@@ -18,108 +18,50 @@ class Recursos extends Conexion {
         
         return $respuesta;
     }
-    /*
-    public function obtenerDatosRecurso($idRecurso) {
-        $conexion = parent::conectar();
-        $sql = "SELECT id_equipo AS idRecurso,
-                       nombre,
-                       descripcion,
-                       categ_SH AS categSH
-                FROM t_cat_equipo 
-                WHERE id_equipo = '$idRecurso'";
-                
-        $result = mysqli_query($conexion, $sql);
-        
-        $recurso = mysqli_fetch_array($result);
-        
-        $datos = array(
-            'idRecurso' => $recurso['idRecurso'],
-            'nombre' => $recurso['nombre'],
-            'descripcion' => $recurso['descripcion'],
-            'categSH' => $recurso['categSH']
-        );
-        
-        return $datos;
-    }
-    */
+    
     public function obtenerDatosRecurso($idRecurso) {
         $conexion = parent::conectar();
         
-        // Usar consulta preparada para mayor seguridad
-        $sql = "SELECT id_equipo, nombre, descripcion, categ_SH 
-                FROM t_cat_equipo 
-                WHERE id_equipo = ?";
-                
-        $stmt = $conexion->prepare($sql);
-        $stmt->bind_param('i', $idRecurso);
-        $stmt->execute();
-        $resultado = $stmt->get_result();
+        // Consulta SQL
+        $sql = "SELECT 
+                    id_equipo as idRecurso,
+                    nombre,
+                    descripcion,
+                    categ_SH as categSH
+                FROM 
+                    t_cat_equipo 
+                WHERE 
+                    id_equipo = '$idRecurso'";
         
-        if ($recurso = $resultado->fetch_assoc()) {
-            // Renombrar las claves para la interfaz
-            $datos = array(
-                'idRecurso' => $recurso['id_equipo'],
-                'nombre' => $recurso['nombre'],
-                'descripcion' => $recurso['descripcion'],
-                'categSH' => $recurso['categ_SH']
-            );
-            
-            $stmt->close();
-            return $datos;
+        $resultado = mysqli_query($conexion, $sql);
+        
+        // Verificar si se encontraron datos
+        if ($fila = mysqli_fetch_assoc($resultado)) {
+            return $fila;
         } else {
-            $stmt->close();
-            return array(
-                'idRecurso' => 0,
-                'nombre' => '',
-                'descripcion' => '',
-                'categSH' => ''
-            );
+            return [
+                "idRecurso" => 0,
+                "nombre" => "",
+                "descripcion" => "",
+                "categSH" => ""
+            ];
         }
     }
-    /*
-    public function actualizarRecurso($datos) {
-        $conexion = parent::conectar();
-        $sql = "UPDATE t_cat_equipo 
-                SET nombre = ?, 
-                    descripcion = ?, 
-                    categ_SH = ? 
-                WHERE id_equipo = ?";
-                
-        $query = $conexion->prepare($sql);
-        $query->bind_param('sssi', $datos['nombre'],
-                                  $datos['descripcion'],
-                                  $datos['categSH'],
-                                  $datos['idRecurso']);
-        $respuesta = $query->execute();
-        $query->close();
-        
-        return $respuesta;
-    }
-    */
+    
     public function actualizarRecurso($datos) {
         $conexion = parent::conectar();
         
-        // Usar consulta preparada
+        // Consulta SQL
         $sql = "UPDATE t_cat_equipo 
-                SET nombre = ?, 
-                    descripcion = ?, 
-                    categ_SH = ? 
-                WHERE id_equipo = ?";
-                
-        $stmt = $conexion->prepare($sql);
-        $stmt->bind_param('sssi', 
-        $datos['nombre'],
-        $datos['descripcion'],
-        $datos['categSH'],
-        $datos['idRecurso']);
+                SET nombre = '" . $datos['nombre'] . "',
+                    descripcion = '" . $datos['descripcion'] . "',
+                    categ_SH = '" . $datos['categSH'] . "'
+                WHERE id_equipo = " . $datos['idRecurso'];
         
-        $respuesta = $stmt->execute();
+        $resultado = mysqli_query($conexion, $sql);
         
-        // Registrar el resultado para depuración
-        error_log("Actualización de recurso ID: " . $datos['idRecurso'] . ", Resultado: " . ($respuesta ? "Exitoso" : "Fallido"));
-        
-        $stmt->close();
-        return $respuesta;
+        // Devolver si la operación fue exitosa
+        return $resultado ? 1 : 0;
     }
     public function eliminarRecurso($idRecurso) {
         $conexion = parent::conectar();

@@ -23,71 +23,40 @@ function agregarNuevoRecurso() {
 
     return false;
 }
-/*
 function obtenerDatosRecurso(idRecurso) {
     $.ajax({
         type: "POST",
         data: "idRecurso=" + idRecurso,
         url: "../procesos/recursos/crud/obtenerDatosRecurso.php",
         success: function(respuesta) {
-            respuesta = jQuery.parseJSON(respuesta);
+            console.log("Respuesta del servidor:", respuesta);
             
-            $('#idRecurso').val(respuesta['idRecurso']);
-            $('#nombreU').val(respuesta['nombre']);
-            $('#descripcionU').val(respuesta['descripcion']);
-            $('#categSHU').val(respuesta['categSH']);
-        }
-    });
-}
-*/
-function obtenerDatosRecurso(idRecurso) {
-    console.log("Obteniendo datos del recurso ID:", idRecurso); // Para depuración
-    
-    $.ajax({
-        type: "POST",
-        data: "idRecurso=" + idRecurso,
-        url: "../procesos/recursos/crud/obtenerDatosRecurso.php",
-        success: function(respuesta) {
-            console.log("Respuesta del servidor:", respuesta); // Para depuración
-            
+            //  la respuesta como JSON
             try {
-                respuesta = jQuery.parseJSON(respuesta);
-                
+                var datos = JSON.parse(respuesta);                
                 // Llenar los campos del formulario
-                $('#idRecurso').val(respuesta.idRecurso);
-                $('#nombreU').val(respuesta.nombre);
-                $('#descripcionU').val(respuesta.descripcion);
-                $('#categSHU').val(respuesta.categSH);
-                
-                console.log("Datos cargados en el formulario"); // Para depuración
+                $('#idRecurso').val(datos.idRecurso);
+                $('#nombreU').val(datos.nombre);
+                $('#descripcionU').val(datos.descripcion);
+                $('#categSHU').val(datos.categSH);
             } catch (error) {
                 console.error("Error al parsear JSON:", error);
-                console.error("Respuesta recibida:", respuesta);
-                
-                Swal.fire(
-                    'Error',
-                    'No se pudieron cargar los datos del recurso',
-                    'error'
-                );
+                alert("Error al cargar los datos del recurso");
             }
         },
-        error: function(xhr, status, error) {
-            console.error("Error AJAX:", error);
-            Swal.fire(
-                'Error',
-                'Hubo un problema al comunicarse con el servidor',
-                'error'
-            );
+        error: function(xhr) {
+            console.error("Error AJAX:", xhr.responseText);
+            alert("Error de comunicación con el servidor");
         }
     });
 }
-/*
 function actualizarRecurso() {
     $.ajax({
         type: "POST",
         data: $('#frmActualizarRecurso').serialize(),
         url: "../procesos/recursos/crud/actualizarRecurso.php",
         success: function(respuesta) {
+            console.log("Respuesta actualización:", respuesta);
             respuesta = respuesta.trim();
             
             if (respuesta == 1) {
@@ -97,12 +66,15 @@ function actualizarRecurso() {
             } else {
                 Swal.fire("Error", "No se pudo actualizar el recurso: " + respuesta, "error");
             }
+        },
+        error: function(xhr) {
+            console.error("Error AJAX:", xhr.responseText);
+            Swal.fire("Error", "Error de comunicación con el servidor", "error");
         }
     });
-
+    
     return false;
 }
-*/
 function actualizarRecurso() {
     console.log("Datos a enviar:", $('#frmActualizarRecurso').serialize()); // Para depuración
     
