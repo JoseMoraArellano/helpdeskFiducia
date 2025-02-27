@@ -25,13 +25,14 @@ function agregarNuevoReporte() {
 
 function eliminarReporteCliente(idReporte) {
     Swal.fire({
-        title: 'Estas seguro de eliminar este registro?',
+        title: '¿Estas seguro de eliminar este registro?',
         text: "Una vez eliminado no podra ser recuperado!",
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, delete it!'
+        confirmButtonText: 'Si, eliminarlo!',
+        cancelButtonText: 'Cancelar'
     }).then((result) => {
         if (result.isConfirmed) {
             $.ajax({
