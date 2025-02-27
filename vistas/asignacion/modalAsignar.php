@@ -29,7 +29,7 @@
                                     t_persona AS persona
                                         INNER JOIN
                                     t_usuarios AS usuario ON persona.id_persona = usuario.id_persona
-                                        AND usuario.id_rol = 1
+                                        AND usuario.activo = 1
                                 ORDER BY persona.paterno";
                         $respuesta = mysqli_query($conexion, $sql);
                     ?>

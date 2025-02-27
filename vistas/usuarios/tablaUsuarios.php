@@ -76,7 +76,7 @@
             <td><?php echo $mostrar['ubicacion']; ?></td>
             <td><?php echo $mostrar['sexo']; ?></td>
             <td>
-                <?php if (!$esAdmin): ?>
+                <?php if (!$esAdmin || $mostrar['estatus'] == 0): ?>
                 <button class="btn btn-info btn-sm" 
                     data-toggle="modal" 
                     data-target="#modalResetPassword"

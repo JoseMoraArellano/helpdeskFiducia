@@ -60,6 +60,7 @@
                             <select name="idRolu" id="idRolu" class="form-control">
                                 <option value="1">Cliente</option>
                                 <option value="2">Administrador</option>
+                                <option value="3">Tecnico 1</option>
                             </select>
                         </div>
                     </div>
