@@ -32,19 +32,37 @@ function eliminarReporteAdmin(idReporte) {
 }
 
 function obtenerDatosSolucion(idReporte) {
+    // Cargar los técnicos primero
     $.ajax({
-        type:"POST",
-        data:"idReporte=" + idReporte,
-        url:"../procesos/reportesAdmin/obtenerSolucion.php",
-        success:function(respuesta) {
-            respuesta = jQuery.parseJSON(respuesta);
-            $('#idReporte').val(respuesta['idReporte']);
-            $('#solucion').val(respuesta['solucion']);
-            $('#estatus').val(respuesta['estatus']);
+        type: "POST",
+        url: "../procesos/reportesAdmin/obtenerTecnicos.php",
+        success: function(respuesta) {
+            // Agregar las opciones al select
+            $('#idTecnico').html('<option value="">Seleccione un técnico</option>' + respuesta);
+            
+            // Luego cargar los datos del reporte
+            $.ajax({
+                type: "POST",
+                data: "idReporte=" + idReporte,
+                url: "../procesos/reportesAdmin/obtenerSolucion.php",
+                success: function(respuesta) {
+                    respuesta = jQuery.parseJSON(respuesta);
+                    $('#idReporte').val(respuesta['idReporte']);
+                    $('#solucion').val(respuesta['solucion']);
+                    $('#estatus').val(respuesta['estatus']);
+                    
+                    // Seleccionar el técnico si ya está asignado
+                    if (respuesta['idTecnico']) {
+                        $('#idTecnico').val(respuesta['idTecnico']);
+                    }
+                    
+                    // Cargar los archivos adjuntos
+                    cargarArchivosAdjuntos(idReporte);
+                }
+            });
         }
     });
 }
-
 function agregarSolucionReporte() {
     $.ajax({
         type:"POST",

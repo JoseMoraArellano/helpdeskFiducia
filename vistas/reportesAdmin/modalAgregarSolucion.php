@@ -11,15 +11,26 @@
             </div>
             <div class="modal-body">
                 <input type="text" id="idReporte" name="idReporte" hidden>
+                
+                <!-- Nuevo campo para seleccionar técnico -->
+                <div class="form-group">
+                    <label for="idTecnico">Técnico que brinda la solución</label>
+                    <select name="idTecnico" id="idTecnico" class="form-control" required>
+                        <option value="">Seleccione un técnico</option>
+                        <!-- Los técnicos se cargarán dinámicamente con JavaScript -->
+                    </select>
+                </div>
+                
                 <label for="solucion">Descripción de la solución</label>
                 <textarea name="solucion" id="solucion" class="form-control" required></textarea>
+                
                 <label for="estatus">Estatus</label>
                 <select name="estatus" id="estatus" class="form-control">
                     <option value="1">Abierto</option>
                     <option value="0">Cerrado</option>
                 </select>
                 
-                <!-- Nueva sección para archivos adjuntos -->
+                <!-- Sección para archivos adjuntos -->
                 <div class="mt-4">
                     <div class="card">
                         <div class="card-header bg-light">

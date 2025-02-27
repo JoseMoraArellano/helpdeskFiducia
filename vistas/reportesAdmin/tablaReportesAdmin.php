@@ -103,29 +103,6 @@
     <?php } ?>
     </tbody>
 </table>
-<!-- Modal para ver archivos adjuntos -->
-<div class="modal fade" id="modalVerArchivos" tabindex="-1" role="dialog" aria-labelledby="tituloModalArchivos" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="tituloModalArchivos">Archivos adjuntos</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body" id="contenidoArchivosAdjuntos">
-                <div class="text-center">
-                    <div class="spinner-border text-primary" role="status">
-                        <span class="sr-only">Cargando...</span>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-            </div>
-        </div>
-    </div>
-</div>
 
 <script>
     $(document).ready(function(){
@@ -166,3 +143,27 @@
         });
     })
 </script>
+
+<!-- Modal para ver archivos adjuntos -->
+<div class="modal fade" id="modalVerArchivos" tabindex="-1" role="dialog" aria-labelledby="tituloModalArchivos" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="tituloModalArchivos">Archivos adjuntos</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="contenidoArchivosAdjuntos">
+                <div class="text-center">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="sr-only">Cargando...</span>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
