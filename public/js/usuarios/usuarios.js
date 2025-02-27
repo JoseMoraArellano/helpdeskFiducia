@@ -111,7 +111,7 @@ function cambioEstatusUsuario(idUsuario, estatus) {
 
 function eliminarUsuario(idUsuario, idPersona) {
     Swal.fire({
-        title: 'Estas seguro de eliminar este registro?',
+        title: '¿Estas seguro de eliminar este registro?',
         text: "Una vez eliminado no podra ser recuperado!",
         icon: 'warning',
         showCancelButton: true,

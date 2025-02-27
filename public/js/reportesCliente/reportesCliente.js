@@ -75,7 +75,7 @@ function agregarNuevoReporte() {
 
 function eliminarReporteCliente(idReporte) {
     Swal.fire({
-        title: 'Estas seguro de eliminar este registro?',
+        title: '¿Estas seguro de eliminar este registro?',
         text: "Una vez eliminado no podra ser recuperado!",
         icon: 'warning',
         showCancelButton: true,

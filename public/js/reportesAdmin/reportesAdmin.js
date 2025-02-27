@@ -11,7 +11,7 @@ function eliminarReporteAdmin(idReporte) {
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
         confirmButtonText: 'Si, eliminar!',
-        confirmButtonText: 'Cancelar'
+        cancelmButtonText: 'Cancelar'
     }).then((result) => {
         if (result.isConfirmed) {
             $.ajax({
