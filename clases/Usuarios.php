@@ -1,35 +1,8 @@
 <?php
-
     include "Conexion.php";
-
-/*
-    class Usuarios extends Conexion {
-        public function loginUsuario($usuario, $password) {
-            $conexion = parent::conectar();
-            $sql = "SELECT * FROM t_usuarios 
-                    WHERE usuario = '$usuario' AND password = '$password'";
-            $respuesta = mysqli_query($conexion, $sql);
-
-            if (mysqli_num_rows($respuesta) > 0) {
-                $datosUsuario = mysqli_fetch_array($respuesta);
-                if ($datosUsuario['activo'] == 1) {
-                    $_SESSION['usuario']['nombre'] = $datosUsuario['usuario'];
-                    $_SESSION['usuario']['id'] = $datosUsuario['id_usuario'];
-                    $_SESSION['usuario']['rol'] = $datosUsuario['id_rol'];
-                    return 1;
-                } else {
-                    return 0;
-                }
-            } else {
-                
-                return 0;
-            }
-        }
-*/
 class Usuarios extends Conexion {
     public function loginUsuario($usuario, $password) {
         $conexion = parent::conectar();
-
         // Obtener información del usuario
         $sql = "SELECT id_usuario, password, accfall, activo, id_rol FROM t_usuarios WHERE usuario = ?";
         $stmt = mysqli_prepare($conexion, $sql);
@@ -48,7 +21,6 @@ class Usuarios extends Conexion {
                 $stmtReset = mysqli_prepare($conexion, $sqlReset);
                 mysqli_stmt_bind_param($stmtReset, "s", $usuario);
                 mysqli_stmt_execute($stmtReset);
-
                 // Iniciar sesion
                 $_SESSION['usuario']['nombre'] = $usuario;
                 $_SESSION['usuario']['id'] = $datosUsuario['id_usuario'];
@@ -68,15 +40,12 @@ class Usuarios extends Conexion {
                         mysqli_stmt_bind_param($stmtDeactivate, "s", $usuario);
                         mysqli_stmt_execute($stmtDeactivate);
                     }
-
                 return 0;
             }
         } else {
             return 0; // Usuario no encontrado
         }
     }
-
-
         public function agregaNuevoUsuario($datos) {
             $conexion = parent::conectar();
             $idPersona = $this->agregarPersona($datos);
@@ -154,7 +123,6 @@ class Usuarios extends Conexion {
                             AND usuarios.id_usuario = '$idUSuario'";
             $respuesta = mysqli_query($conexion, $sql);
             $usuario = mysqli_fetch_array($respuesta);
-
             $datos = array(
                 'idUsuario' => $usuario['idUsuario'],
                 'nombreUsuario' => $usuario['nombreUsuario'],
@@ -173,7 +141,6 @@ class Usuarios extends Conexion {
             );
             return $datos;
         }
-
         public function actualizarUsuario($datos) {
             $conexion = parent::conectar();
             $exitoPersona = $this->actualizarPersona($datos);
@@ -195,7 +162,6 @@ class Usuarios extends Conexion {
                 return 0;
             }
         }
-
         public function actualizarPersona($datos) {
             $conexion = parent::conectar();
             $idPersona = $this->obtenerIdPersona($datos['idUsuario']);
@@ -221,7 +187,6 @@ class Usuarios extends Conexion {
             $query->close();
             return $respuesta;
         }
-
         public function obtenerIdPersona($idUsuario) {
             $conexion = parent::conectar();
             $sql = "SELECT 
@@ -312,5 +277,4 @@ class Usuarios extends Conexion {
                 return 0;
             }
         }
-
     }

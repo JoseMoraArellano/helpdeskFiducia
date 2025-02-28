@@ -3,7 +3,7 @@ session_start();
 require_once "../../clases/Conexion.php";
 
 // Verificar que el usuario tenga rol de administrador
-if (isset($_SESSION['usuario']) && $_SESSION['usuario']['rol'] == 2) {
+if (isset($_SESSION['usuario']) && $_SESSION['usuario']['rol'] == 2 || $_SESSION['usuario']['rol'] == 3) {
     $conexion = new Conexion();
     $con = $conexion->conectar();
     

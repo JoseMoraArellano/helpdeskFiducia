@@ -59,7 +59,7 @@
                         <span class="fas fa-file-alt"></span> Reportes Soporte
                     </a>
                 </li>
-            <?php } else if($_SESSION['usuario']['rol'] == 2) { ?>
+            <?php } else if($_SESSION['usuario']['rol'] == 2|| $_SESSION['usuario']['rol'] == 3) { ?>
                 <!--DE aqui son las vistas del administrador-->
                 <li class="nav-item">
                     <a class="nav-link" href="usuarios.php">
