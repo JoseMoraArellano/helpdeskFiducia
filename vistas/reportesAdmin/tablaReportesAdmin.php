@@ -54,14 +54,21 @@
             <td><?php echo $mostrar['fecha'];?></td>
             <td><?php echo $mostrar['problema'];?></td>
             <td>
-                <?php
-                    $estatus = $mostrar['estatus'];
+            <?php
+                $estatus = $mostrar['estatus'];
+                
+                if ($estatus == 1) {
                     $cadenaEstatus = '<span class="badge badge-danger">Abierto</span>';
-                    if ($estatus == 0) {
-                        $cadenaEstatus = '<span class="badge badge-success">Cerrado</span>';
-                    }
-                    echo $cadenaEstatus;
-                ?>
+                } else if ($estatus == 0) {
+                    $cadenaEstatus = '<span class="badge badge-success">Cerrado</span>';
+                } else if ($estatus == 2) {
+                    $cadenaEstatus = '<span class="badge badge-warning">En proceso</span>';
+                } else {
+                    $cadenaEstatus = '<span class="badge badge-secondary">Desconocido</span>';
+                }
+                
+                echo $cadenaEstatus;
+            ?>
             </td>
             <td>
                 <button class="btn btn-info btn-sm" 

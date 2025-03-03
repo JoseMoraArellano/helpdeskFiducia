@@ -2,17 +2,31 @@
 google.charts.load('current', {'packages':['corechart']});
 google.charts.setOnLoadCallback(cargarDatos);
 
-// Función para cargar datos desde el servidor
+// Función para cargar todos los datos del dashboard
 function cargarDatos() {
+    console.log("Iniciando carga de datos del dashboard...");
+    
+    // Mostrar indicadores de carga en todos los elementos
+    $('#reportesAbiertos').html('<small><i class="fas fa-spinner fa-spin"></i></small>');
+    $('#reportesCerrados').html('<small><i class="fas fa-spinner fa-spin"></i></small>');
+    $('#reportesTotal').html('<small><i class="fas fa-spinner fa-spin"></i></small>');
+    $('#reportesProceso').html('<small><i class="fas fa-spinner fa-spin"></i></small>');
+    $('#tiempoMedio').html('<small><i class="fas fa-spinner fa-spin"></i></small>');
+    $('#totalResueltos').html('<small><i class="fas fa-spinner fa-spin"></i></small>');
+    
+    // Primera petición AJAX para datos generales de gráficos
     $.ajax({
         url: '../procesos/reportes/obtenerDatosGraficos.php',
         type: 'GET',
         dataType: 'json',
         success: function(datos) {
+            console.log("Datos de gráficos recibidos:", datos);
+            
             // Actualizar tarjetas de resumen
             $('#reportesAbiertos').text(datos.resumen.abiertos);
             $('#reportesCerrados').text(datos.resumen.cerrados);
             $('#reportesTotal').text(datos.resumen.total);
+            $('#reportesProceso').text(datos.resumen.proceso || 0);
             
             // Renderizar gráficos
             dibujarGraficoEstados(datos.resumen);
@@ -21,8 +35,50 @@ function cargarDatos() {
             dibujarGraficoTecnicos(datos.tecnicos);
         },
         error: function(xhr, status, error) {
-            console.error("Error al cargar datos:", error);
-            alert('Error al cargar los datos para los gráficos');
+            console.error("Error al cargar datos de gráficos:", error);
+            console.error("Respuesta del servidor:", xhr.responseText);
+            
+            // Mostrar mensaje de error en lugar de spinners
+            $('#reportesAbiertos').text('Error');
+            $('#reportesCerrados').text('Error');
+            $('#reportesTotal').text('Error');
+            $('#reportesProceso').text('Error');
+            
+            // Mostrar mensajes de error en los gráficos
+            $('#chartEstados, #chartDispositivos, #chartMensual, #chartTecnicos').each(function() {
+                $(this).html('<div class="text-center text-danger p-3"><i class="fas fa-exclamation-triangle"></i> Error al cargar datos</div>');
+            });
+        }
+    });
+    
+    // Segunda petición AJAX para el tiempo medio de resolución
+    $.ajax({
+        url: '../procesos/reportes/obtenerTiempoMedio.php',
+        type: 'GET',
+        dataType: 'json',
+        success: function(datos) {
+            console.log("Datos de tiempo medio recibidos:", datos);
+            
+            // Verificar que los datos sean válidos y no sean nulos
+            if (datos && 'tiempoMedio' in datos && 'totalResueltos' in datos) {
+                $('#tiempoMedio').text(datos.tiempoMedio || '0');
+                $('#totalResueltos').text(datos.totalResueltos || '0');
+            } else {
+                console.warn("Los datos de tiempo medio no tienen el formato esperado:", datos);
+                $('#tiempoMedio').text('0');
+                $('#totalResueltos').text('0');
+            }
+        },
+        error: function(xhr, status, error) {
+            console.error("Error al cargar datos de tiempo medio:", error);
+            console.error("Respuesta del servidor:", xhr.responseText);
+            
+            // Mostrar mensaje de error
+            $('#tiempoMedio').text('Error');
+            $('#totalResueltos').text('Error');
+        },
+        complete: function() {
+            console.log("Carga de datos completada");
         }
     });
 }
@@ -31,13 +87,14 @@ function cargarDatos() {
 function dibujarGraficoEstados(datos) {
     var data = google.visualization.arrayToDataTable([
         ['Estado', 'Cantidad'],
-        ['Abiertos', datos.abiertos],
-        ['Cerrados', datos.cerrados]
+        ['Abiertos', parseInt(datos.abiertos) || 0],
+        ['En proceso', parseInt(datos.proceso) || 0],
+        ['Cerrados', parseInt(datos.cerrados) || 0]
     ]);
     
     var options = {
         title: 'Distribución de reportes por estado',
-        colors: ['#e74a3b', '#1cc88a'],
+        colors: ['#e74a3b', '#f6c23e', '#1cc88a'],
         is3D: true,
         backgroundColor: 'transparent'
     };
@@ -60,12 +117,18 @@ function dibujarGraficoDispositivos(datos) {
         title: 'Reportes por tipo de dispositivo',
         legend: { position: 'none' },
         bars: 'horizontal',
+        backgroundColor: 'transparent',
+        colors: ['#36b9cc'],
         axes: {
             x: {
                 0: { side: 'top', label: 'Cantidad de reportes'}
             }
         },
-        backgroundColor: 'transparent'
+                // barra individualmente si lo deseas
+                bar: { groupWidth: '90%' },
+                //degradado a las barras
+                dataOpacity: 0.85
+    
     };
     
     var chart = new google.visualization.BarChart(document.getElementById('chartDispositivos'));
@@ -102,7 +165,46 @@ function dibujarGraficoMensual(datos) {
     var chart = new google.visualization.LineChart(document.getElementById('chartMensual'));
     chart.draw(data, options);
 }
+// Función para cargar datos desde el servidor
+function cargarDatos() {
+    // Llamada AJAX existente para datos generales
+    $.ajax({
+        url: '../procesos/reportes/obtenerDatosGraficos.php',
+        type: 'GET',
+        dataType: 'json',
+        success: function(datos) {
+            // Código existente para actualizar gráficos
+            $('#reportesAbiertos').text(datos.resumen.abiertos);
+            $('#reportesCerrados').text(datos.resumen.cerrados);
+            $('#reportesTotal').text(datos.resumen.total);
+            $('#reportesProceso').text(datos.resumen.proceso);
+            
+            // Renderizar gráficos existentes
+            dibujarGraficoEstados(datos.resumen);
+            dibujarGraficoDispositivos(datos.dispositivos);
+            dibujarGraficoMensual(datos.mensual);
+            dibujarGraficoTecnicos(datos.tecnicos);
+        },
+        error: function() {
+            alert('Error al cargar los datos para los gráficos');
+        }
+    });
+    
+    // Nueva llamada AJAX para tiempo medio
+    $.ajax({
+        url: '../procesos/reportes/obtenerTiempoMedio.php',
+        type: 'GET',
+        dataType: 'json',
+        success: function(datos) {
+            $('#tiempoMedio').text(datos.tiempoMedio);
+            $('#totalResueltos').text(datos.totalResueltos);
+        },
 
+        error: function() {
+            console.error('Error al cargar datos de tiempo medio');
+        }
+    });
+}
 // NUEVA FUNCIÓN: Gráfico de barras para reportes cerrados por técnico
 function dibujarGraficoTecnicos(datos) {
     if (!datos || datos.length === 0) {
@@ -126,7 +228,8 @@ function dibujarGraficoTecnicos(datos) {
         colors: ['#4e73df'],
         backgroundColor: 'transparent',
         hAxis: {
-            title: 'Cantidad de tickets'
+            title: 'Cantidad de tickets',
+            format: '0',
         },
         vAxis: {
             title: 'Técnico'

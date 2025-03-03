@@ -14,14 +14,19 @@ if (isset($_SESSION['usuario']) && $_SESSION['usuario']['rol'] == 2 || $_SESSION
     $sqlAbiertos = "SELECT COUNT(*) as total FROM t_reportes WHERE estatus = 1";
     $resultadoAbiertos = mysqli_query($con, $sqlAbiertos);
     $datosResumen['abiertos'] = mysqli_fetch_assoc($resultadoAbiertos)['total'];
-    
+
+    // Reportes proceso
+    $sqlProceso = "SELECT COUNT(*) as total FROM t_reportes WHERE estatus = 2";
+    $resultadoProceso = mysqli_query($con, $sqlProceso);
+    $datosResumen['proceso'] = mysqli_fetch_assoc($resultadoProceso)['total'];
+        
     // Reportes cerrados
     $sqlCerrados = "SELECT COUNT(*) as total FROM t_reportes WHERE estatus = 0";
     $resultadoCerrados = mysqli_query($con, $sqlCerrados);
     $datosResumen['cerrados'] = mysqli_fetch_assoc($resultadoCerrados)['total'];
     
     // Total de reportes
-    $datosResumen['total'] = $datosResumen['abiertos'] + $datosResumen['cerrados'];
+    $datosResumen['total'] = $datosResumen['abiertos'] + $datosResumen['cerrados'] +$datosResumen['proceso'];
     
     // Datos para gráfico de reportes por dispositivo
     $sqlDispositivos = "SELECT 
@@ -68,6 +73,7 @@ if (isset($_SESSION['usuario']) && $_SESSION['usuario']['rol'] == 2 || $_SESSION
             'total' => intval($fila['total'])
         );
     }
+    
     
     // Datos para gráfico de tickets cerrados por técnico
     $sqlTecnicos = "SELECT 

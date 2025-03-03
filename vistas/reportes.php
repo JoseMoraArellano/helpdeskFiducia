@@ -1,7 +1,7 @@
 <?php 
     session_start();
     include "header.php"; 
-    if (isset($_SESSION['usuario']) && $_SESSION['usuario']['rol'] == 2|| $_SESSION['usuario']['rol'] == 3) : 
+    if (isset($_SESSION['usuario']) && ($_SESSION['usuario']['rol'] == 2 || $_SESSION['usuario']['rol'] == 3)) : 
 ?>
 
 <!-- Page Content -->
@@ -38,7 +38,7 @@
                     <div class="mt-4">
                         <!-- Tarjetas de resumen -->
                         <div class="row">
-                            <div class="col-md-4 mb-4">
+                            <div class="col-md-3 mb-4">
                                 <div class="card border-left-primary shadow h-100 py-2">
                                     <div class="card-body">
                                         <div class="row no-gutters align-items-center">
@@ -55,7 +55,25 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-4 mb-4">
+                            <!-- Nueva tarjeta para Reportes en proceso -->
+                            <div class="col-md-3 mb-4">
+                                <div class="card border-left-warning shadow h-100 py-2">
+                                    <div class="card-body">
+                                        <div class="row no-gutters align-items-center">
+                                            <div class="col mr-2">
+                                                <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                                                    En Proceso</div>
+                                                <div class="h5 mb-0 font-weight-bold text-gray-800" id="reportesProceso">0</div>
+                                            </div>
+                                            <div class="col-auto">
+                                                <i class="fas fa-cogs fa-2x text-gray-300"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3 mb-4">
                                 <div class="card border-left-success shadow h-100 py-2">
                                     <div class="card-body">
                                         <div class="row no-gutters align-items-center">
@@ -72,7 +90,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-4 mb-4">
+                            <div class="col-md-3 mb-4">
                                 <div class="card border-left-info shadow h-100 py-2">
                                     <div class="card-body">
                                         <div class="row no-gutters align-items-center">
@@ -90,8 +108,30 @@
                             </div>
                         </div>
 
-                        <!-- Gráficos -->
+                        <!-- Tiempo medio de resolución -->
                         <div class="row">
+                            <div class="col-md-6 mb-4">
+                                <div class="card shadow">
+                                    <div class="card-header py-3">
+                                        <h6 class="m-0 font-weight-bold text-primary">Tiempo medio de resolución</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row align-items-center">
+                                            <div class="col-md-6">
+                                                <div id="chartTiempoMedio" style="width: 100%; height: 120px;"></div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="text-center">
+                                                    <h4 class="mb-0 font-weight-bold text-gray-800"><span id="tiempoMedio">0</span></h4>
+                                                    <p class="mb-0">horas laborales promedio</p>
+                                                    <small class="text-muted">Basado en <span id="totalResueltos">0</span> tickets resueltos</small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                             <div class="col-md-6 mb-4">
                                 <div class="card shadow">
                                     <div class="card-header py-3">
@@ -102,7 +142,10 @@
                                     </div>
                                 </div>
                             </div>
-                            
+                        </div>
+                        
+                        <!-- Gráficos -->
+                        <div class="row">
                             <div class="col-md-6 mb-4">
                                 <div class="card shadow">
                                     <div class="card-header py-3">
@@ -110,6 +153,17 @@
                                     </div>
                                     <div class="card-body">
                                         <div id="chartDispositivos" style="width: 100%; height: 300px;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-6 mb-4">
+                                <div class="card shadow">
+                                    <div class="card-header py-3">
+                                        <h6 class="m-0 font-weight-bold text-primary">Tickets Resueltos por Técnico</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <div id="chartTecnicos" style="width: 100%; height: 300px;"></div>
                                     </div>
                                 </div>
                             </div>
@@ -123,19 +177,6 @@
                                     </div>
                                     <div class="card-body">
                                         <div id="chartMensual" style="width: 100%; height: 300px;"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="row">
-                            <div class="col-md-12 mb-4">
-                                <div class="card shadow">
-                                    <div class="card-header py-3">
-                                        <h6 class="m-0 font-weight-bold text-primary">Tickets Resueltos por Técnico</h6>
-                                    </div>
-                                    <div class="card-body">
-                                        <div id="chartTecnicos" style="width: 100%; height: 300px;"></div>
                                     </div>
                                 </div>
                             </div>
