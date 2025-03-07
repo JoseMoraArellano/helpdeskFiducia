@@ -3,6 +3,7 @@ google.charts.load('current', {'packages':['corechart']});
 google.charts.setOnLoadCallback(cargarDatos);
 
 // Función para cargar todos los datos del dashboard
+
 function cargarDatos() {
     console.log("Iniciando carga de datos del dashboard...");
     
@@ -31,8 +32,9 @@ function cargarDatos() {
             // Renderizar gráficos
             dibujarGraficoEstados(datos.resumen);
             dibujarGraficoDispositivos(datos.dispositivos);
-            dibujarGraficoMensual(datos.mensual);
+//            dibujarGraficoMensual(datos.mensual);
             dibujarGraficoTecnicos(datos.tecnicos);
+            dibujarGraficoMensual(datos.mensual, datos.mensualTecnicos); // Nuevo gráfico de reportes por mes y por técnico
         },
         error: function(xhr, status, error) {
             console.error("Error al cargar datos de gráficos:", error);
@@ -136,8 +138,10 @@ function dibujarGraficoDispositivos(datos) {
 }
 
 // Gráfico de Línea para reportes por mes
-function dibujarGraficoMensual(datos) {
-    var dataArray = [['Mes', 'Reportes']];
+// Gráfico de Línea para reportes por mes y por técnico
+function dibujarGraficoMensual(datos, datosTecnicos) {
+    // Para el gráfico general por mes (como estaba antes)
+    var dataArray = [['Mes', 'Total']];
     
     datos.forEach(function(item) {
         // Formatear mes para mejor visualización
@@ -164,8 +168,85 @@ function dibujarGraficoMensual(datos) {
     
     var chart = new google.visualization.LineChart(document.getElementById('chartMensual'));
     chart.draw(data, options);
+    
+    // Nuevo gráfico para reportes por mes y por técnico
+    if (datosTecnicos && datosTecnicos.length > 0) {
+        // Primero, organizar los datos para el formato que necesita Google Charts
+        var tecnicos = {}; // Para almacenar los técnicos únicos
+        var meses = {}; // Para almacenar los meses únicos
+        
+        // Identificar todos los técnicos y meses únicos
+        datosTecnicos.forEach(function(item) {
+            tecnicos[item.tecnico] = true;
+            
+            // Formatear mes
+            var partesFecha = item.mes.split('-');
+            var nombreMes = new Date(partesFecha[0], partesFecha[1] - 1, 1).toLocaleDateString('es-ES', { month: 'short', year: 'numeric' });
+            meses[nombreMes] = item.mes; // Guardamos la relación entre nombre formateado y valor original
+        });
+        
+        // Convertir a arrays
+        var listaTecnicos = Object.keys(tecnicos);
+        var listaMeses = Object.keys(meses).sort(function(a, b) {
+            // Ordenar meses cronológicamente
+            var mesA = meses[a].split('-');
+            var mesB = meses[b].split('-');
+            return new Date(mesA[0], mesA[1] - 1, 1) - new Date(mesB[0], mesB[1] - 1, 1);
+        });
+        
+        // Crear cabecera para el dataArray con los nombres de los técnicos
+        var tecnicoDataArray = [['Mes'].concat(listaTecnicos)];
+        
+        // Inicializar todos los datos a 0
+        listaMeses.forEach(function(mes) {
+            var fila = [mes];
+            listaTecnicos.forEach(function() {
+                fila.push(0);
+            });
+            tecnicoDataArray.push(fila);
+        });
+        
+        // Rellenar con los datos reales
+        datosTecnicos.forEach(function(item) {
+            var partesFecha = item.mes.split('-');
+            var nombreMes = new Date(partesFecha[0], partesFecha[1] - 1, 1).toLocaleDateString('es-ES', { month: 'short', year: 'numeric' });
+            var indiceMes = listaMeses.indexOf(nombreMes);
+            var indiceTecnico = listaTecnicos.indexOf(item.tecnico);
+            
+            if (indiceMes > -1 && indiceTecnico > -1) {
+                // +1 porque la primera columna es el mes
+                tecnicoDataArray[indiceMes + 1][indiceTecnico + 1] = item.total;
+            }
+        });
+        
+        var dataTecnicos = google.visualization.arrayToDataTable(tecnicoDataArray);
+        
+        var optionsTecnicos = {
+            title: 'Reportes por mes y por técnico',
+            curveType: 'function',
+            legend: { position: 'right' },
+            backgroundColor: 'transparent',
+            hAxis: {
+                title: 'Mes'
+            },
+            vAxis: {
+                title: 'Cantidad de reportes',
+                minValue: 0
+            },
+            // Colores personalizados para cada línea
+            colors: ['#4e73df', '#1cc88a', '#36b9cc', '#f6c23e', '#e74a3b', '#6610f2', '#6f42c1', '#fd7e14', '#20c9a6', '#8980c9']
+        };
+        
+        var chartTecnicos = new google.visualization.LineChart(document.getElementById('chartMensualTecnicos'));
+        chartTecnicos.draw(dataTecnicos, optionsTecnicos);
+    } else {
+        // Si no hay datos, mostrar un mensaje
+        document.getElementById('chartMensualTecnicos').innerHTML = 
+            '<div class="text-center p-4"><i class="fas fa-info-circle text-info"></i> No hay datos disponibles por técnico</div>';
+    }
 }
 // Función para cargar datos desde el servidor
+/*
 function cargarDatos() {
     // Llamada AJAX existente para datos generales
     $.ajax({
@@ -182,7 +263,7 @@ function cargarDatos() {
             // Renderizar gráficos existentes
             dibujarGraficoEstados(datos.resumen);
             dibujarGraficoDispositivos(datos.dispositivos);
-            dibujarGraficoMensual(datos.mensual);
+            dibujarGraficoMensual(datos.mensual, datos.mensualTecnicos);
             dibujarGraficoTecnicos(datos.tecnicos);
         },
         error: function() {
@@ -205,6 +286,7 @@ function cargarDatos() {
         }
     });
 }
+*/
 // NUEVA FUNCIÓN: Gráfico de barras para reportes cerrados por técnico
 function dibujarGraficoTecnicos(datos) {
     if (!datos || datos.length === 0) {

@@ -52,6 +52,37 @@ if (isset($_SESSION['usuario']) && $_SESSION['usuario']['rol'] == 2 || $_SESSION
         );
     }
     
+    // Datos para gráfico de reportes por mes y por técnico
+$sqlMensualTecnicos = 
+"SELECT 
+DATE_FORMAT(r.fecha, '%Y-%m') as mes,
+u.usuario as tecnico,
+COUNT(*) as total
+FROM 
+t_reportes as r
+INNER JOIN t_usuarios as u ON r.id_usuario_tecnico = u.id_usuario
+WHERE 
+r.id_usuario_tecnico IS NOT NULL
+GROUP BY 
+DATE_FORMAT(r.fecha, '%Y-%m'), r.id_usuario_tecnico
+ORDER BY 
+mes, tecnico
+LIMIT 100";
+
+$resultadoMensualTecnicos = mysqli_query($con, $sqlMensualTecnicos);
+$datosMensualTecnicos = array();
+
+while ($fila = mysqli_fetch_assoc($resultadoMensualTecnicos)) {
+$datosMensualTecnicos[] = array(
+'mes' => $fila['mes'],
+'tecnico' => $fila['tecnico'],
+'total' => intval($fila['total'])
+);
+}
+
+// Agregar los datos al array final
+$datos['mensualTecnicos'] = $datosMensualTecnicos;
+
     // Datos para gráfico de reportes por mes
     $sqlMensual = "SELECT 
                         DATE_FORMAT(fecha, '%Y-%m') as mes,
@@ -105,6 +136,7 @@ if (isset($_SESSION['usuario']) && $_SESSION['usuario']['rol'] == 2 || $_SESSION
         'resumen' => $datosResumen,
         'dispositivos' => $datosDispositivos,
         'mensual' => $datosMensual,
+        'mensualTecnicos' => $datosMensualTecnicos,
         'tecnicos' => $datosTecnicos  // Añadimos los datos de técnicos
     );
     
