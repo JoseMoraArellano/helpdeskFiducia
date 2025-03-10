@@ -17,7 +17,7 @@ class Usuarios extends Conexion {
 
             if ($datosUsuario['password'] === $password) {
                 // Restablecer intentos fallidos al iniciar sesion correctamente
-                $sqlReset = "UPDATE t_usuarios SET accfall = 0 WHERE usuario = ?";
+                $sqlReset = "UPDATE t_usuarios SET accfall = 0,ult_acce = NOW() WHERE usuario = ?";                
                 $stmtReset = mysqli_prepare($conexion, $sqlReset);
                 mysqli_stmt_bind_param($stmtReset, "s", $usuario);
                 mysqli_stmt_execute($stmtReset);
@@ -54,14 +54,15 @@ class Usuarios extends Conexion {
                 $sql = "INSERT INTO t_usuarios (id_rol, 
                                                 id_persona, 
                                                 usuario, 
-                                                password, 
+                                                password,
+                                                fecha_insert,
                                                 ubicacion) 
-                        VALUES (?, ?, ?, ?, ?)";
+                        VALUES (?, ?, ?, ?, now(),?)";
                 $query = $conexion->prepare($sql);
                 $query->bind_param("iisss", $datos['idRol'],
                                             $idPersona,
                                             $datos['usuario'],
-                                            $datos['password'],
+                                            $datos['password'],                                            
                                             $datos['ubicacion']);
                 $respuesta = $query->execute();
                 return $respuesta;

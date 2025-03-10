@@ -13,6 +13,9 @@
                 <button class="btn btn-primary" data-toggle="modal" data-target="#modalAgregarUsuarios">
                     Agregar Usuario
                 </button>
+                <button class="btn btn-success" data-toggle="modal" data-target="#modalAgregarAreas">
+                    Gestión de Áreas
+                </button>
                 <hr>
                 <div id="tablaUsuariosLoad"></div>
             </p>
@@ -24,10 +27,11 @@
     include "usuarios/modalAgregar.php";
     include "usuarios/modalActualizar.php";
     include "usuarios/modalResetPassword.php";
+    include "usuarios/modalAgregarAreas.php";
     include "footer.php";
 ?>
     <script src="../public/js/usuarios/usuarios.js"></script>
-
+    <script src="../public/js/usuarios/areas.js"></script>
 <?php else : ?>
     <script type="module">
         import * as modulo from "../public/js/modulo.js";
