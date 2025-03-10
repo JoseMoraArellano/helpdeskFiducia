@@ -1,4 +1,3 @@
-
 <!-- Modal -->
 <form id="frmAgregarUsuario" method="POST" onsubmit="return agregarNuevoUsuario()">
     <div class="modal fade" id="modalAgregarUsuarios" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
