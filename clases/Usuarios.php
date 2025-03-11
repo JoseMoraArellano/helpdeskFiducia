@@ -45,33 +45,39 @@ class Usuarios extends Conexion {
         } else {
             return 0; // Usuario no encontrado
         }
-    }
-        public function agregaNuevoUsuario($datos) {
-            $conexion = parent::conectar();
-            $idPersona = $this->agregarPersona($datos);
-
-            if ($idPersona > 0) {
-                $sql = "INSERT INTO t_usuarios (id_rol, 
-                                                id_persona, 
-                                                usuario, 
-                                                password,
-                                                fecha_insert,
-                                                ubicacion) 
-                        VALUES (?, ?, ?, ?, now(),?)";
-                $query = $conexion->prepare($sql);
-                $query->bind_param("iisss", $datos['idRol'],
-                                            $idPersona,
-                                            $datos['usuario'],
-                                            $datos['password'],                                            
-                                            $datos['ubicacion']);
-                $respuesta = $query->execute();
-                return $respuesta;
-            } else {
-                return 0;
-            }
-
+    }public function agregaNuevoUsuario($datos) {
+        $conexion = parent::conectar();
+        $idPersona = $this->agregarPersona($datos);
+    
+        if ($idPersona > 0) {
+            // Consulta SQL corregida para coincidir con la estructura de la tabla
+            $sql = "INSERT INTO t_usuarios (id_rol,
+                                        id_persona,
+                                        usuario,
+                                        password,
+                                        ubicacion,
+                                        activo,
+                                        fecha_insert,
+                                        id_ofici,
+                                        accfall,
+                                        id_area)
+                    VALUES (?, ?, ?, ?, ?, 1, now(), 0, 0, ?)";
+                    
+            $query = $conexion->prepare($sql);
+            $query->bind_param("iisssi", 
+                            $datos['idRol'],
+                            $idPersona,
+                            $datos['usuario'],
+                            $datos['password'],
+                            $datos['ubicacion'],
+                            $datos['idArea']);
             
-        }
+            $respuesta = $query->execute();
+            return $respuesta;
+        } else {
+            return 0;
+        }  
+    }
 
         public function agregarPersona($datos) {
             $conexion = parent::conectar();
@@ -101,27 +107,31 @@ class Usuarios extends Conexion {
             $conexion = parent::conectar();
             
             $sql = "SELECT 
-                        usuarios.id_usuario AS idUsuario,
-                        usuarios.usuario AS nombreUsuario,
-                        roles.nombre AS rol,
-                        usuarios.id_rol AS idRol,
-                        usuarios.ubicacion AS ubicacion,
-                        usuarios.activo AS estatus,
-                        usuarios.id_persona AS idPersona,
-                        persona.nombre AS nombrePersona,
-                        persona.paterno AS paterno,
-                        persona.materno AS materno,
-                        persona.fecha_nacimiento AS fechaNacimiento,
-                        persona.sexo AS sexo,
-                        persona.correo AS correo,
-                        persona.telefono AS telefono
-                    FROM
-                        t_usuarios AS usuarios
-                            INNER JOIN
-                        t_cat_roles AS roles ON usuarios.id_rol = roles.id_rol
-                            INNER JOIN
-                        t_persona AS persona ON usuarios.id_persona = persona.id_persona
-                            AND usuarios.id_usuario = '$idUSuario'";
+            usuarios.id_usuario AS idUsuario,
+            usuarios.usuario AS nombreUsuario,
+            roles.nombre AS rol,
+            usuarios.id_rol AS idRol,
+            usuarios.ubicacion AS ubicacion,
+            usuarios.activo AS estatus,
+            area.Nomb_area AS area,
+            usuarios.id_persona AS idPersona,
+            persona.nombre AS nombrePersona,
+            persona.paterno AS paterno,
+            persona.materno AS materno,
+            persona.fecha_nacimiento AS fechaNacimiento,
+            persona.sexo AS sexo,
+            persona.correo AS correo,
+            persona.telefono AS telefono
+            
+        FROM
+            t_usuarios AS usuarios
+                INNER JOIN
+            t_cat_roles AS roles ON usuarios.id_rol = roles.id_rol
+                INNER JOIN
+            t_persona AS persona ON usuarios.id_persona = persona.id_persona
+                INNER JOIN
+            t_area AS area ON usuarios.idrarea = area.id_area
+                AND usuarios.id_usuario = '$idUSuario'";
             $respuesta = mysqli_query($conexion, $sql);
             $usuario = mysqli_fetch_array($respuesta);
             $datos = array(

@@ -69,22 +69,37 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-sm-12">
+                        <div class="col-sm-4">
                             <label for="idRol">Rol de usuario</label>
                             <select name="idRol" id="idRol" class="form-control">
+                                 <option value=""></option>
                                 <option value="1">Cliente</option>
                                 <option value="2">Administrador</option>
                                 <Option Value="3">Tecnico</Option>
                             </select>
                         </div>
+                        <div class="col-sm-4">
+        <label for="idArea">Área</label>
+        <select name="idArea" id="idArea" class="form-control">
+            <option value=""></option>
+            <?php
+                require_once "../clases/Conexion.php";
+                $conexion = new Conexion();
+                $conexion = $conexion->conectar();
+                $sql = "SELECT idrarea, Nomb_area FROM t_area ORDER BY idrarea ASC";
+                $respuesta = mysqli_query($conexion, $sql);
+                while($mostrar = mysqli_fetch_array($respuesta)) {
+                    echo '<option value="'.$mostrar['idrarea'].'">'.$mostrar['Nomb_area'].'</option>';
+                }
+            ?>
+        </select>
                     </div>
                     <div class="row">
-                        <div class="col-sm-12">
-                            <label for="ubicacion">Comentarios</label>
-                            <textarea name="ubicacion" id="ubicacion" class="form-control"></textarea>
-                        </div>
-                    </div>
-                </div>
+    </div>
+</div>
+<label for="ubicacion">Comentarios</label>
+<textarea name="ubicacion" id="ubicacion" class="form-control"></textarea>
+                
                 <div class="modal-footer">
                 <span class="btn btn-secondary" data-dismiss="modal">Cerrar</span>
                 <button class="btn btn-primary">Agregar</button>
