@@ -48,8 +48,8 @@
     <tbody>
         <?php
             while($mostrar = mysqli_fetch_array($respuesta)) {   
-                // Verificor si es administrador (con id_rol = 2 y nombre 'admin' Ojo si cambio el nombre)
-                $esAdmin = ($mostrar['id_Rol'] == 2 && $mostrar['nombreUsuario'] == 'admin') ? true : false;
+                // Verificor si es administrador (con id_rol = 2 y idUsuario)
+                $esAdmin = ($mostrar['id_Rol'] == 2 && $mostrar['idUsuario'] == '1') ? true : false;
                 $esTecnico = ($mostrar['id_Rol'] == 3 ) ? true : false;
         ?>
         <!-- Verificar si el estatus es 0 lo atenuo-->
