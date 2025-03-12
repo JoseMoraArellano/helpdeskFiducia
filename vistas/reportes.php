@@ -224,6 +224,50 @@
     });
 </script>
 
+<!-- Script para filtrar reportes según parámetro de URL -->
+<script>
+    $(document).ready(function() {
+        // Obtener parámetro de filtro de la URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const filtro = urlParams.get('filtro');
+        
+        // Función para cargar datos con filtro
+        function cargarReportesConFiltro() {
+            // Asegurarse de que estamos en la pestaña de lista
+            $('#lista-tab').tab('show');
+            
+            // Esperar a que se cargue la tabla y se inicialice DataTables
+            setTimeout(function() {
+                // Verificar si la tabla tiene DataTable inicializado
+                if ($.fn.DataTable.isDataTable('#tablaReportesAdminDataTable')) {
+                    const tabla = $('#tablaReportesAdminDataTable').DataTable();
+                    
+                    // Aplicar filtro según el parámetro
+                    switch(filtro) {
+                        case 'abiertos':
+                            tabla.search('Abierto').draw();
+                            break;
+                        case 'proceso':
+                            tabla.search('En proceso').draw();
+                            break;
+                        case 'cerrados':
+                            tabla.search('Cerrado').draw();
+                            break;
+                    }
+                } else {
+                    // Si aún no se ha inicializado DataTables, intentar de nuevo en 500ms
+                    setTimeout(cargarReportesConFiltro, 500);
+                }
+            }, 800);
+        }
+        
+        // Si existe un parámetro de filtro, aplicarlo
+        if (filtro) {
+            cargarReportesConFiltro();
+        }
+    });
+</script>
+
 <?php else : ?>
     <script type="module">
         import * as modulo from "../public/js/modulo.js";

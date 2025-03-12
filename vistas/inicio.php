@@ -20,92 +20,100 @@
                 <div class="row mt-4">
                     <!-- Reportes Abiertos -->
                     <div class="col-xl-3 col-md-6 mb-4">
-                        <div class="card border-left-warning shadow h-100 py-2">
-                            <div class="card-body">
-                                <div class="row no-gutters align-items-center">
-                                    <div class="col mr-2">
-                                        <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                                            Reportes Abiertos</div>
-                                        <div class="h5 mb-0 font-weight-bold text-gray-800" id="reportesAbiertos">0</div>
-                                        <div class="text-xs text-danger mt-2" id="reporteAntiguoAbierto">
-                                            Reporte más antiguo: 0 días
+                        <a href="../vistas/reportes.php?filtro=abiertos" class="text-decoration-none">
+                            <div class="card border-left-warning shadow h-100 py-2">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                                                Reportes Abiertos</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800" id="reportesAbiertos">0</div>
+                                            <div class="text-xs text-danger mt-2" id="reporteAntiguoAbierto">
+                                                Reporte más antiguo: 0 días
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="col-auto">
-                                        <i class="fas fa-folder-open fa-2x text-gray-300"></i>
+                                        <div class="col-auto">
+                                            <i class="fas fa-folder-open fa-2x text-gray-300"></i>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </a>
                     </div>
 
                     <!-- Reportes En Proceso -->
                     <div class="col-xl-3 col-md-6 mb-4">
-                        <div class="card border-left-primary shadow h-100 py-2">
-                            <div class="card-body">
-                                <div class="row no-gutters align-items-center">
-                                    <div class="col mr-2">
-                                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                            En Proceso</div>
-                                        <div class="h5 mb-0 font-weight-bold text-gray-800" id="reportesEnProceso">0</div>
-                                        <div class="text-xs text-danger mt-2" id="reporteAntiguoEnProceso">
-                                            Reporte más antiguo: 0 días
+                        <a href="../vistas/reportes.php?filtro=proceso" class="text-decoration-none">
+                            <div class="card border-left-primary shadow h-100 py-2">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                                En Proceso</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800" id="reportesEnProceso">0</div>
+                                            <div class="text-xs text-danger mt-2" id="reporteAntiguoEnProceso">
+                                                Reporte más antiguo: 0 días
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="col-auto">
-                                        <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
+                                        <div class="col-auto">
+                                            <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </a>
                     </div>
 
                     <!-- Reportes Cerrados -->
                     <div class="col-xl-3 col-md-6 mb-4">
-                        <div class="card border-left-success shadow h-100 py-2">
-                            <div class="card-body">
-                                <div class="row no-gutters align-items-center">
-                                    <div class="col mr-2">
-                                        <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                            Reportes Cerrados</div>
-                                        <div class="h5 mb-0 font-weight-bold text-gray-800" id="reportesCerrados">0</div>
-                                    </div>
-                                    <div class="col-auto">
-                                        <i class="fas fa-check-circle fa-2x text-gray-300"></i>
+                        <a href="../vistas/reportes.php?filtro=cerrados" class="text-decoration-none">
+                            <div class="card border-left-success shadow h-100 py-2">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                                Reportes Cerrados</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800" id="reportesCerrados">0</div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fas fa-check-circle fa-2x text-gray-300"></i>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </a>
                     </div>
 
                     <!-- Total de Reportes -->
                     <div class="col-xl-3 col-md-6 mb-4">
-                        <div class="card border-left-info shadow h-100 py-2">
-                            <div class="card-body">
-                                <div class="row no-gutters align-items-center">
-                                    <div class="col mr-2">
-                                        <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
-                                            Total Reportes</div>
-                                        <div class="h5 mb-0 font-weight-bold text-gray-800" id="reportesTotal">0</div>
-                                        <div class="row no-gutters align-items-center mt-2">
-                                            <div class="col">
-                                                <div class="progress progress-sm mr-2">
-                                                    <div class="progress-bar bg-success" role="progressbar" id="barraCerrados"
-                                                        style="width: 0%" aria-valuenow="0" aria-valuemin="0"
-                                                        aria-valuemax="100"></div>
-                                                    <div class="progress-bar bg-primary" role="progressbar" id="barraEnProceso"
-                                                        style="width: 0%" aria-valuenow="0" aria-valuemin="0"
-                                                        aria-valuemax="100"></div>
+                        <a href="../vistas/reportes.php" class="text-decoration-none">
+                            <div class="card border-left-info shadow h-100 py-2">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
+                                                Total Reportes</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800" id="reportesTotal">0</div>
+                                            <div class="row no-gutters align-items-center mt-2">
+                                                <div class="col">
+                                                    <div class="progress progress-sm mr-2">
+                                                        <div class="progress-bar bg-success" role="progressbar" id="barraCerrados"
+                                                            style="width: 0%" aria-valuenow="0" aria-valuemin="0"
+                                                            aria-valuemax="100"></div>
+                                                        <div class="progress-bar bg-primary" role="progressbar" id="barraEnProceso"
+                                                            style="width: 0%" aria-valuenow="0" aria-valuemin="0"
+                                                            aria-valuemax="100"></div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="col-auto">
-                                        <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
+                                        <div class="col-auto">
+                                            <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </a>
                     </div>
                 </div>
 

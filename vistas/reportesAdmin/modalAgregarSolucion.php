@@ -27,7 +27,7 @@
                 <label for="estatus">Estatus</label>
                 <select name="estatus" id="estatus" class="form-control">
                     <option value="1">Abierto</option>    
-                    <option value="2">Pendiente</option>                    
+                    <option value="2">En proceso</option>                    
                     <option value="0">Cerrado</option>
                 </select>
                 

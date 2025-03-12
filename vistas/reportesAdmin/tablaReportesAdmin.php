@@ -5,6 +5,10 @@
     $conexion = $con->conectar();
     $idUsuario = $_SESSION['usuario']['id'];
     $contador = 1;
+
+        // Recibir parámetro de filtro si existe
+        $filtro = isset($_POST['filtro']) ? $_POST['filtro'] : '';
+
     $sql = "SELECT 
                 reporte.id_reporte AS idReporte,
                 reporte.id_usuario AS idUsuario,
@@ -26,9 +30,18 @@
                     INNER JOIN
                 t_persona AS persona ON usuario.id_persona = persona.id_persona
                     INNER JOIN
-                t_cat_equipo AS equipo ON reporte.id_equipo = equipo.id_equipo 
-                ORDER BY reporte.fecha DESC";
-                
+                t_cat_equipo AS equipo ON reporte.id_equipo = equipo.id_equipo";
+    // Agregar condición de filtro si existe
+    if (!empty($filtro)) {
+        if ($filtro === 'abiertos') {
+            $sql .= " WHERE reporte.estatus = 1"; // Abierto
+        } else if ($filtro === 'proceso') {
+            $sql .= " WHERE reporte.estatus = 2"; // En proceso
+        } else if ($filtro === 'cerrados') {
+            $sql .= " WHERE reporte.estatus = 0"; // Cerrado
+        }
+    }
+    $sql .= " ORDER BY reporte.fecha DESC";            
     $respuesta = mysqli_query($conexion, $sql);
 ?>
 
@@ -56,7 +69,7 @@
             <td>
             <?php
                 $estatus = $mostrar['estatus'];
-                
+// Crear cadena de estatus              
                 if ($estatus == 1) {
                     $cadenaEstatus = '<span class="badge badge-danger">Abierto</span>';
                 } else if ($estatus == 0) {

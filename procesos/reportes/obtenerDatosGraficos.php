@@ -40,7 +40,7 @@ if (isset($_SESSION['usuario']) && $_SESSION['usuario']['rol'] == 2 || $_SESSION
                             reporte.id_equipo
                         ORDER BY 
                             total DESC
-                        LIMIT 10";
+                        LIMIT 50";
     
     $resultadoDispositivos = mysqli_query($con, $sqlDispositivos);
     $datosDispositivos = array();
