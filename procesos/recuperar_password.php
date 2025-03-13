@@ -30,9 +30,9 @@ class RecuperarPassword {
             
             // Actualizar token en la base de datos
             $sql_update = "UPDATE t_persona            
-                          SET token_recuperacion = ?, 
-                              token_expira = ? 
-                          WHERE id_persona = ?";
+                        SET token_recuperacion = ?, 
+                        token_expira = ? 
+                        WHERE id_persona = ?";
                           
             $stmt_update = mysqli_prepare($this->conexion, $sql_update);
             mysqli_stmt_bind_param($stmt_update, "ssi", $token, $expira, $datos['id_persona']);

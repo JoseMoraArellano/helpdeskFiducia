@@ -1,7 +1,6 @@
 
 <?php
     include "Conexion.php";
-
     class Asignacion extends Conexion {
         public function agregarAsignacion($datos) {
             $conexion = parent::conectar();
