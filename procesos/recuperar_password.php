@@ -49,7 +49,7 @@ class RecuperarPassword {
                 <body>
                     <h2>Recuperación de contraseña</h2>
                     <p>Has solicitado recuperar tu contraseña. Haz clic en el siguiente enlace para restablecerla:</p>
-                    <p><a href='http://helpdesk.fianzasfiducia.com/reset_password.php?token=$token'>Restablecer contraseña</a></p>
+                    <p><a href='https://helpdesk.fianzasfiducia.com/reset_password.php?token=$token'>Restablecer contraseña</a></p>
                     <p>Este enlace expirará en 1 hora.</p>
                     <p>Si no solicitaste este cambio, ignora este correo.</p>
                 </body>
