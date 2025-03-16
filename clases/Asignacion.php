@@ -1,7 +1,9 @@
 
 <?php
     include "Conexion.php";
+
     class Asignacion extends Conexion {
+        // Listar asignaciones
         public function agregarAsignacion($datos) {
             $conexion = parent::conectar();
             $sql = "INSERT INTO t_asignacion (id_persona,

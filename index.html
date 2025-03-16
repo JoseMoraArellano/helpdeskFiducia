@@ -13,6 +13,48 @@
     <title>Login</title>
     <script src="https://www.google.com/recaptcha/enterprise.js?render=6Le9EH4qAAAAAF8oRGGCFe_ek-awPsklNEiSv49N"></script>
     <link rel="icon" type="image/x-icon" href="/public/img/afiducialogo.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        .password-container {
+            position: relative;
+        }
+        .password-toggle {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #999;
+        }
+        .input-frame {
+            border: 2px solid #f6f6f6;
+            border-radius: 8px;
+            padding: 10px;
+            margin: 10px auto;
+            max-width: 85%;
+            background-color: #f8f9fa;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+        .input-frame:focus-within {
+            border-color: #39ace7;
+            box-shadow: 0 0 15px rgba(57, 172, 231, 0.4);
+        }
+        .input-label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 14px;
+            color: #666;
+            text-align: left;
+            padding-left: 5px;
+        }
+        #login, #password {
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            width: 100%;
+            margin: 0;
+        }
+    </style>
 </head>
 <body>
     <!-- Envoltorio principal de la página con la clase de animación fadeInDown -->
@@ -31,11 +73,24 @@
             </div>       
             <!-- Formulario de Login -->
             <form id="frmLogin" method="POST" onsubmit="return loginUsuario()">
-                <!-- Campo para el nombre de usuario, obligatorio -->
-                <input type="text" id="login" class="fadeIn second" name="login" placeholder="Usuario" required>
-                <!-- Campo para la contraseña, obligatorio -->
-                <input type="password" id="password" class="fadeIn third" name="password" placeholder="Contraseña" required>
-                    <input type="hidden" id="recaptchaToken" name="recaptchaToken">
+                <!-- Campo para el nombre de usuario con marco visual -->
+                <div class="input-frame fadeIn second">
+                    <label class="input-label" for="login">Usuario:</label>
+                    <input type="text" id="login" class="fadeIn second" name="login" required>
+                </div>
+                
+                <!-- Campo para la contraseña con botón para mostrar/ocultar y marco visual -->
+                <div class="input-frame fadeIn third">
+                    <label class="input-label" for="password">Contraseña:</label>
+                    <div class="password-container">
+                        <input type="password" id="password" class="fadeIn third" name="password" required>
+                        <span class="password-toggle" onclick="togglePasswordVisibility()">
+                            <i class="fas fa-eye" id="togglePassword"></i>
+                        </span>
+                    </div>
+                </div>
+                
+                <input type="hidden" id="recaptchaToken" name="recaptchaToken">
                 <!-- Botón para enviar el formulario -->
                 <input type="submit" class="fadeIn fourth" value="Entrar">
             </form>
@@ -111,6 +166,7 @@
             
         </div>
     </div>
+</div>
 
      <!-- Vinculo las librerías de JavaScript necesarias para Bootstrap y otras funcionalidades -->
 <!--    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
@@ -122,5 +178,23 @@
     <script src="public/sweetalert2/sweetalert2@11.js"></script>
     <!-- Archivo JavaScript que contiene la lógica del login de usuarios -->
     <script src="public/js/usuarios/login.js"></script>
+    
+    <!-- Script para controlar la visualización de la contraseña -->
+    <script>
+        function togglePasswordVisibility() {
+            const passwordInput = document.getElementById('password');
+            const toggleIcon = document.getElementById('togglePassword');
+            
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                toggleIcon.classList.remove('fa-eye');
+                toggleIcon.classList.add('fa-eye-slash');
+            } else {
+                passwordInput.type = 'password';
+                toggleIcon.classList.remove('fa-eye-slash');
+                toggleIcon.classList.add('fa-eye');
+            }
+        }
+    </script>
 </body>
 </html>
